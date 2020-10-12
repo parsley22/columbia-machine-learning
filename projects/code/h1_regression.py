@@ -11,3 +11,21 @@ class OLS:
 
     def predict(self, X):
         return X.dot(self.theta)
+
+class active:
+    def __init__(self,X,y, lambda_, sigma_2):
+        self.X = X
+        self.y = y
+        self.lambda_ = lambda_
+        self.sigma_2 = sigma_2 
+        self.I = np.ones(self.X.shape[1])
+
+        self.Sigma = 0
+        self.mu = 0
+
+    def get_posterior(self):
+        self.Sigma = np.linalg.inv((self.lambda_ * self.I) + self.sigma_2 * (self.X.T @ self.X))
+        self.mu = np.linalg.inv((self.lambda_ * self.sigma_2 * self.I) + (self.X.T @ self.X)) @ (self.X.T @ self.y)
+
+
+
